@@ -5,6 +5,7 @@ ________________________________________________________________________________
 **Illustrates**
 
 *Website Portfolio that illustrates my software development into different categories. 
+
 *A repository that displays categories of myself; from “Home”, “About”, “Skills”, and “Portfolio” section.
 ______________________________________________________________________________________________________________________________________________________________
 
