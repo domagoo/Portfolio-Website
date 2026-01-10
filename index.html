@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Michael Williams | Portfolio</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+  <!-- Dark overlay on top of the background image -->
+
+  <div class="overlay" aria-hidden="true"></div>
+
+
+  <main class="page">
+
+    <!-- HERO (text sits on top of the full background image) -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <h1 class="name">Michael Williams</h1>
+
+        <p class="tagline">Front-End Developer | JavaScript | CSS Animations</p>
+
+        <button class="cta" data-target="#projects">View My Work</button>
+
+      </div>
+
+
+      <div class="hero-fade" aria-hidden="true"></div>
+
+    </section>
+
+     <!-- ABOUT -->
+
+    <section id="about" class="section">
+
+      <h2 class="section-title">About Me</h2>
+
+      <p class="section-text">
+
+        I'm Michael Williams, a developer focused on building clean, responsive, and interactive
+
+        web experiences using modern front-end technologies.
+
+      </p>
+
+    </section>
+
+
+    <!-- PROJECTS -->
+
+    <section id="projects" class="section">
+
+      <h2 class="section-title">Projects</h2>
+
+
+      <div class="projects-row">
+
+        <a class="project-card" href="#" aria-label="Portfolio Website">
+
+          <span>Portfolio Website</span>
+
+        </a>
+
+
+        <a class="project-card" href="#" id="openChatApp" aria-label="JavaScript App">
+
+          <span>AI Chatbot</span>
+
+        </a>
+
+
+        <a class="project-card" href="#" aria-label="UI Animation Demo">
+
+          <span>UI Animation Demo</span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+    
+        <!-- CONTACT -->
+
+    <section id="contact" class="section">
+
+      <h2 class="section-title">Contact</h2>
+
+      <p class="contact">
+
+       Email: <a href="mailto:michaelwilliams.dev@email.com">michaelwilliams.dev@email.com</a>
+       
+         </p>
+
+    </section>
+
+
+    <footer class="footer">© <span id="year"></span> Michael Williams</footer>
+
+  </main>
+
+
+  
+
+<!-- CHAT APP MODAL -->
+<div class="modal" id="chatModal" aria-hidden="true">
+<div class="modal-backdrop" id="chatCloseBackdrop"></div>
+
+<div class="modal-panel" role="dialog" aria-modal="true" aria-label="API Chatbox">
+<div class="modal-topbar">
+    
+
+<div class="mode">
+
+  <span class="mode-label">Mode</span>
+
+
+  <button id="modeDemo" class="mode-btn is-active" type="button">Demo</button>
+
+  <button id="modeLive" class="mode-btn" type="button">Live</button>
+
+
+  <span id="modeStatus" class="mode-status">Demo mode: works offline</span>
+
+</div>
+
+<div class="modal-title">
+API Chatbox <span class="badge">Context Engineering</span>
+</div>
+<button class="icon-btn" id="chatCloseBtn" type="button" aria-label="Close">✕</button>
+</div>
+
+<div class="modal-body">
+<!-- LEFT: System + Memory -->
+<aside class="side">
+<h3>System</h3>
+<label class="label">Role / Instructions</label>
+<textarea id="systemPrompt" class="textarea" rows="7">You are a helpful assistant. Use the provided context when relevant. If context is missing, ask a clarifying question.</textarea>
+
+<label class="label">User Profile / Memory</label>
+<textarea id="memory" class="textarea" rows="5">User: Michael Williams
+Goal: Build a clean, modern portfolio + projects.</textarea>
+
+<div class="row">
+<button class="small-btn" id="clearChat" type="button">Clear Chat</button>
+<button class="small-btn" id="saveState" type="button">Save</button>
+</div>
+
+<p class="hint">
+Tip: System + Memory are part of the “context” sent to your API.
+</p>
+</aside>
+
+<!-- CENTER: Chat -->
+<section class="chat">
+<div class="chat-log" id="chatLog" aria-live="polite"></div>
+
+<form class="chat-input" id="chatForm">
+<input
+id="chatMessage"
+class="input"
+type="text"
+placeholder="Ask something… (e.g., 'Improve my portfolio About section')"
+autocomplete="off"
+/>
+<button class="send-btn" type="submit">Send</button>
+</form>
+</section>
+
+<!-- RIGHT: Retrieved Context -->
+<aside class="side">
+<h3>Context</h3>
+<label class="label">Retrieved Context (RAG)</label>
+<textarea id="retrievedContext" class="textarea" rows="10">Paste or auto-load snippets here…</textarea>
+
+<label class="label">Model Settings</label>
+<div class="kv">
+<div class="kv-row">
+<span class="kv-key">Temperature</span>
+<input id="temp" class="kv-input" type="number" step="0.1" min="0" max="2" value="0.7" />
+</div>
+<div class="kv-row">
+<span class="kv-key">Max Tokens</span>
+<input id="maxTokens" class="kv-input" type="number" min="50" max="2000" value="300" />
+</div>
+</div>
+
+<p class="hint">
+This mimics a “context engineering” workflow: system + memory + retrieved context + messages.
+</p>
+</aside>
+</div>
+</div>
+</div>
+
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+
