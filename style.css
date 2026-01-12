@@ -1489,6 +1489,82 @@ body {
   background: transparent;
 }
 
+
+/* ===========================
+   CHAT MODAL — MOBILE FIX (shows Demo/Live + keeps topbar visible)
+=========================== */
+@media (max-width: 520px){
+
+  /* Make the chat modal full-screen on mobile */
+  #chatModal .modal-panel{
+    width: 100vw !important;
+    height: 100dvh !important;          /* dynamic viewport (mobile-safe) */
+    margin: 0 !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Topbar stays visible */
+  #chatModal .modal-topbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: auto !important;
+    min-height: 56px;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: calc(10px + env(safe-area-inset-top));
+  }
+
+  /* Let title wrap so buttons have room */
+  #chatModal .modal-title{
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.2;
+    max-width: 100%;
+  }
+
+  /* Mode row wraps so Demo/Live never disappear */
+  #chatModal .mode{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  #chatModal .mode-btn{
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  #chatModal .mode-status{
+    width: 100%;
+    font-size: 12px;
+    opacity: 0.75;
+  }
+
+  /* Body becomes the scroll container (not the whole page) */
+  #chatModal .modal-body{
+    flex: 1 1 auto;
+    height: auto !important;            /* overrides calc(100% - 56px) */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom);
+    display: grid;                       /* keep your layout rules */
+  }
+}
+
+@media (max-width: 520px){
+  #chatModal .modal-body .chat{
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+
 /* ===========================
    PAC-MAN MODAL EMBED
 =========================== */
