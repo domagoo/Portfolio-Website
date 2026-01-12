@@ -1,5 +1,40 @@
 /* pacman_game/script.js
 */
+/* =========================
+   DESKTOP-ONLY GUARD
+========================= */
+
+const DESKTOP_MIN_WIDTH = 900;
+const isDesktop = () => window.innerWidth >= DESKTOP_MIN_WIDTH;
+
+function showDesktopOnlyMessage() {
+  const msg = document.createElement("div");
+  msg.className = "desktop-only-overlay";
+  msg.innerHTML = `
+    <div class="desktop-only-card">
+      <h2>Desktop Only</h2>
+      <p>
+        Pac-Man is currently optimized for desktop keyboards and larger screens.
+      </p>
+      <p class="muted">
+        Please open this game on a desktop or laptop to play.
+      </p>
+
+      <a href="../index.html" class="back-to-portfolio">
+        ← Back to Portfolio
+      </a>
+    </div>
+  `;
+  document.body.appendChild(msg);
+}
+
+
+/* If NOT desktop, block the game */
+if (!isDesktop()) {
+  showDesktopOnlyMessage();
+  // HARD STOP — do not init game
+  throw new Error("Pac-Man disabled on mobile");
+}
 
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();

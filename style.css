@@ -1564,6 +1564,85 @@ body {
   }
 }
 
+/* ===========================
+   CHAT MODAL — MOBILE: show chat thread first + keep log visible
+=========================== */
+@media (max-width: 520px){
+
+  /* Fullscreen modal */
+  #chatModal .modal-panel{
+    width: 100vw !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Sticky topbar so it never scrolls away */
+  #chatModal .modal-topbar{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: calc(10px + env(safe-area-inset-top));
+  }
+
+  /* IMPORTANT: On mobile, switch body to flex column */
+  #chatModal .modal-body{
+    flex: 1 1 auto;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* we will scroll inside panels */
+  }
+
+  /* Reorder: chat FIRST, then the two side panels */
+  #chatModal .chat{ order: 1; }
+  #chatModal .modal-body .side:first-child{ order: 2; }
+  #chatModal .modal-body .side:last-child{ order: 3; }
+
+  /* Make the chat area take most of the screen */
+  #chatModal .chat{
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 12px;
+  }
+
+  /* ✅ THIS is the missing piece: force chat-log to be visible + scrollable */
+  #chatModal .chat-log{
+    flex: 1 1 auto;
+    min-height: 40vh;          /* guarantees you SEE the thread */
+    max-height: 55dvh;         /* prevents it from getting pushed away */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Keep input pinned */
+  #chatModal .chat-input{
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    padding: 10px 0 calc(12px + env(safe-area-inset-bottom));
+    background: linear-gradient(
+      to top,
+      rgba(10,10,18,0.95),
+      rgba(10,10,18,0.70),
+      rgba(10,10,18,0.0)
+    );
+  }
+
+  /* Side panels become shorter “cards” and scroll internally */
+  #chatModal .side{
+    max-height: 32dvh;
+    overflow-y: auto;
+    border-left: none !important;
+    border-right: none !important;
+  }
+}
+
 
 /* ===========================
    PAC-MAN MODAL EMBED
