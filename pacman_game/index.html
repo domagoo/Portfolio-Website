@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pac-Man Arcade | Michael Williams</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-shell">
+    <header class="game-top">
+     <div class="title">
+      <div class="title-big">Pac-Man Arcade</div>
+    <span class="pill">Canvas + JS • Arrow keys / WASD</span>
+
+    <!-- BACK BUTTON -->
+    <a href="../index.html" class="back-btn">← Back to Portfolio</a>
+     </div>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Score</div><div class="v" id="score">0</div></div>
+        <div class="stat"><div class="k">Lives</div><div class="v" id="lives">3</div></div>
+        <div class="stat"><div class="k">Level</div><div class="v" id="level">1</div></div>
+      </div>
+    </header>
+
+    <main class="game-main">
+      <section class="board glass">
+        <div class="stage">
+            <div class="fx" aria-hidden="true"></div>
+          <!-- tabindex is REQUIRED so canvas can receive focus -->
+          <canvas id="game" tabindex="0" aria-label="Pac-Man game canvas"></canvas>
+        </div>
+
+        <div class="hud glass">
+          <div class="hud-row">
+            <button class="btn" id="btnStart" type="button">Start</button>
+            <button class="btn btn-alt" id="btnPause" type="button">Pause</button>
+            <button class="btn btn-ghost" id="btnReset" type="button">Reset</button>
+          </div>
+
+          <div class="hint">
+            <div><strong>Controls:</strong> Arrow keys / WASD • Press <strong>P</strong> to pause</div>
+            <div>Tip: Eat the power pellet to chase ghosts.</div>
+          </div>
+
+          <div class="status" id="status">Ready. Click Start.</div>
+
+          <!-- Debug line so we can verify the game is actually running + receiving keys -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="game-foot">
+      <span>© <span id="year"></span> Michael Williams</span>
+      <span class="sep">•</span>
+      <span>Built for recruiter-friendly UI polish</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,215 +1,370 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Michael Williams | Portfolio</title>
-
   <link rel="stylesheet" href="style.css" />
-
 </head>
 
 <body>
-
-  <!-- Dark overlay on top of the background image -->
-
   <div class="overlay" aria-hidden="true"></div>
 
-
   <main class="page">
-
-    <!-- HERO (text sits on top of the full background image) -->
-
+    <!-- HERO -->
     <section class="hero">
-
       <div class="hero-content">
-
         <h1 class="name">Michael Williams</h1>
-
-        <p class="tagline">Front-End Developer | JavaScript | CSS Animations</p>
-
+        <p class="tagline">Full-Stack Developer | JavaScript | APIs | UI Systems</p>
         <button class="cta" data-target="#projects">View My Work</button>
-
       </div>
-
-
       <div class="hero-fade" aria-hidden="true"></div>
-
     </section>
 
-     <!-- ABOUT -->
-
+    <!-- ABOUT -->
     <section id="about" class="section">
-
       <h2 class="section-title">About Me</h2>
-
       <p class="section-text">
-
-        I'm Michael Williams, a developer focused on building clean, responsive, and interactive
-
-        web experiences using modern front-end technologies.
-
+    Creative, solutions-driven full-stack developer with a strong foundation in application development and computer systems.
+    I build clean, responsive front-end experiences and connect them to secure, scalable backend services using production-style workflows, drawing on hands-on experience across hardware, software, operating systems, and programming. 
+    Passionate about practical engineering and delivering reliable tools that improve workflows, learning, and user experience.
       </p>
-
     </section>
-
 
     <!-- PROJECTS -->
-
     <section id="projects" class="section">
-
       <h2 class="section-title">Projects</h2>
 
-
       <div class="projects-row">
-
-        <a class="project-card" href="#" aria-label="Portfolio Website">
-
-          <span>Portfolio Website</span>
-
+        <a class="project-card" href="#" id="openChatApp" aria-label="Context Engineering Chat">
+          <span>Context Engineering Chat</span>
         </a>
 
-
-        <a class="project-card" href="#" id="openChatApp" aria-label="JavaScript App">
-
-          <span>AI Chatbot</span>
-
+        <a class="project-card" href="#" id="openWhyHire" aria-label="Why Hire Me">
+          <span>Why Hire Me</span>
         </a>
 
-
-        <a class="project-card" href="#" aria-label="UI Animation Demo">
-
-          <span>UI Animation Demo</span>
-
+        <a class="project-card" href="pacman_game/index.html" aria-label="Pac-Man Arcade">
+          <span>Pac-Man Arcade</span>
         </a>
+
 
       </div>
 
+      <p class="section-subtext">
+        Click a card above — everything opens inside the site for a smooth user experience.
+      </p>
     </section>
 
-    
-        <!-- CONTACT -->
+    <!-- CONTACT -->
+    <section class="contact glass" id="contact">
+    <div class="contact-head">
+        <h2>Contact</h2>
+        <p class="muted">Send me a message — it emails me directly.</p>
+    </div>
 
-    <section id="contact" class="section">
+    <form class="contact-form" id="contactForm">
+        <div class="field">
+        <label for="from_name">Name</label>
+        <input id="from_name" name="from_name" type="text" placeholder="Your name" autocomplete="name" required />
+        </div>
 
-      <h2 class="section-title">Contact</h2>
+        <div class="field">
+        <label for="reply_to">Email</label>
+        <input id="reply_to" name="reply_to" type="email" placeholder="you@email.com" autocomplete="email" required />
+        </div>
 
-      <p class="contact">
+        <div class="field">
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text" placeholder="What’s this about?" autocomplete="off" required />
+        </div>
 
-       Email: <a href="mailto:michaelwilliams.dev@email.com">michaelwilliams.dev@email.com</a>
-       
-         </p>
+        <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message..." autocomplete="off" required></textarea>
+        </div>
 
+        <!-- Honeypot (spam trap) -->
+        <input 
+        class="hp" 
+        type="text" 
+        name="company" 
+        tabindex="-1" 
+        autocomplete="off" 
+        aria-hidden="true"
+        />
+
+        <button class="btn cta-send" type="submit">
+        <span class="btn-text">Send Message</span>
+        <span class="btn-glow" aria-hidden="true"></span>
+        </button>
+
+        <div class="form-status" id="formStatus" aria-live="polite"></div>
+    </form>
     </section>
 
 
     <footer class="footer">© <span id="year"></span> Michael Williams</footer>
-
   </main>
 
+  <!-- ===========================
+       CHAT APP MODAL
+  ============================ -->
+  <div class="modal" id="chatModal" aria-hidden="true">
+    <div class="modal-backdrop" id="chatCloseBackdrop"></div>
 
-  
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-label="API Chatbox">
+      <div class="modal-topbar">
+        <div class="modal-title">
+          Context Engineering Chat <span class="badge">Demo + Live</span>
+        </div>
 
-<!-- CHAT APP MODAL -->
-<div class="modal" id="chatModal" aria-hidden="true">
-<div class="modal-backdrop" id="chatCloseBackdrop"></div>
+        <div class="mode">
+          <span class="mode-label">Mode</span>
+          <button id="modeDemo" class="mode-btn is-active" type="button">Demo</button>
+          <button id="modeLive" class="mode-btn" type="button">Live</button>
+          <span id="modeStatus" class="mode-status">Demo mode: works offline</span>
+        </div>
 
-<div class="modal-panel" role="dialog" aria-modal="true" aria-label="API Chatbox">
-<div class="modal-topbar">
-    
+        <button class="icon-btn" id="chatCloseBtn" type="button" aria-label="Close">✕</button>
+      </div>
 
-<div class="mode">
+      <div class="modal-body">
+        <!-- LEFT -->
+        <aside class="side">
+          <h3>System</h3>
+          <label class="label">Role / Instructions</label>
+          <textarea id="systemPrompt" class="textarea" rows="7">You are a helpful assistant. Use the provided context when relevant. If context is missing, ask a clarifying question.</textarea>
 
-  <span class="mode-label">Mode</span>
+          <label class="label">User Profile / Memory</label>
+          <textarea id="memory" class="textarea" rows="5">User: Michael Williams
+Goal: Build a recruiter-ready full-stack portfolio.
+Style: concise, practical, modern.</textarea>
+
+          <div class="row">
+            <button class="small-btn" id="clearChat" type="button">Clear Chat</button>
+            <button class="small-btn" id="saveState" type="button">Save</button>
+          </div>
+
+          <p class="hint">
+            Tip: System + Memory + Context are the “context pack” sent to the model.
+          </p>
+        </aside>
+
+        <!-- CENTER -->
+        <section class="chat">
+          <div class="chat-log" id="chatLog" aria-live="polite"></div>
+
+          <form class="chat-input" id="chatForm">
+            <input
+              id="chatMessage"
+              class="input"
+              type="text"
+              placeholder="Ask something… (e.g., 'Rewrite my About section')"
+              autocomplete="off"
+            />
+            <button class="send-btn" type="submit">Send</button>
+          </form>
+        </section>
+
+        <!-- RIGHT -->
+        <aside class="side">
+          <h3>Context</h3>
+          <label class="label">Retrieved Context (RAG)</label>
+          <textarea id="retrievedContext" class="textarea" rows="10">Paste snippets here to ground answers…</textarea>
+
+          <label class="label">Model Settings</label>
+          <div class="kv">
+            <div class="kv-row">
+              <span class="kv-key">Temperature</span>
+              <input id="temp" class="kv-input" type="number" step="0.1" min="0" max="2" value="0.7" />
+            </div>
+            <div class="kv-row">
+              <span class="kv-key">Max Tokens</span>
+              <input id="maxTokens" class="kv-input" type="number" min="50" max="2000" value="300" />
+            </div>
+          </div>
+
+          <p class="hint">
+            This layout demonstrates context engineering: instructions + memory + RAG + chat state.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===========================
+       WHY HIRE ME MODAL
+  ============================ -->
+  <div class="modal" id="whyHireModal" aria-hidden="true">
+    <div class="modal-backdrop" id="whyCloseBackdrop"></div>
+
+    <div class="modal-panel modal-panel--why" role="dialog" aria-modal="true" aria-label="Why Hire Me">
+      <div class="modal-topbar">
+        <div class="modal-title">
+          Why Hire Me <span class="badge">Full-Stack Snapshot</span>
+        </div>
+
+        <button class="icon-btn" id="whyCloseBtn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="why-wrap">
+        <nav class="tabs" aria-label="Why Hire Me Tabs">
+          <button class="tab is-active" type="button" data-tab="overview">Overview</button>
+          <button class="tab" type="button" data-tab="skills">Skills</button>
+          <button class="tab" type="button" data-tab="eduwork">Education & Work</button>
+        </nav>
+
+        <div class="tab-panels">
+          <!-- Overview -->
+          <section class="panel is-active" id="panel-overview">
+            <h3 class="panel-title">A Full-Stack Developer who builds practical, production-ready solutions</h3>
+            <p class="panel-text">
+              I build clean, responsive front-end experiences backed by secure APIs and real deployments.
+              My focus is delivering usable features, maintaining structure, and designing systems that scale from demo to production.
+            </p>
+
+            <div class="highlights">
+              <div class="highlight">
+                <div class="highlight-title">End-to-End Delivery</div>
+                <div class="highlight-text">UI → API → deployment workflows (Vercel, env vars, serverless functions).</div>
+              </div>
+              <div class="highlight">
+                <div class="highlight-title">Strong UI & UX</div>
+                <div class="highlight-text">Accessible layouts, modern motion, and clean component-style structure.</div>
+              </div>
+              <div class="highlight">
+                <div class="highlight-title">Modern AI Workflows</div>
+                <div class="highlight-text">Context engineering patterns: System + Memory + RAG + chat state.</div>
+              </div>
+            </div>
+
+            <p class="panel-foot">
+              Want proof? Click <strong>Context Engineering Chat</strong> — it runs in Demo mode and Live mode through a secure backend.
+            </p>
+          </section>
+
+          <!-- Skills (Per-skill bubbles) -->
+          <section class="panel" id="panel-skills">
+            <h3 class="panel-title">Skills</h3>
+            <p class="panel-text">
+              A quick-scan full-stack skill map (each bubble animates when this tab opens).
+            </p>
+
+            <div class="bubble-grid bubble-grid--skills" id="skillBubbles">
+              <!-- Languages -->
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="JavaScript 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">JavaScript</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="HTML 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">HTML</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="CSS and SASS 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">CSS/SASS</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Python 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Python</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="PHP 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">PHP</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Java 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Java</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="C++ 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">C++</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Bootstrap 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Bootstrap</div></div></div></div>
+
+              <!-- Technologies -->
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="MySQL 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">MySQL</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="MongoDB 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">MongoDB</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Copilot 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Copilot</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Amazon Q 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Amazon Q</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="UI UX Design 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">UI/UX</div></div></div></div>
+
+              <!-- Frameworks -->
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="React 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">React</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Angular 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Angular</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Vue 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Vue</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Next.js 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Next</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Laravel 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Laravel</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Symfony 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Symfony</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Spring Boot 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Spring</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="jQuery 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">jQuery</div></div></div></div>
+
+              <!-- Operating Systems -->
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Linux 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Linux</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Windows 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Windows</div></div></div></div>
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="macOS 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">macOS</div></div></div></div>
+
+              <!-- Deployment -->
+              <div class="bubble-card"><div class="bubble" data-percent="100" role="img" aria-label="Vercel 100 percent"><div class="bubble-inner"><div class="bubble-num">100%</div><div class="bubble-skill">Vercel</div></div></div></div>
+            </div>
+
+            <p class="panel-foot">
+              Full-stack includes UI systems + serverless backend + deployment workflows.
+            </p>
+          </section>
+
+          <!-- Education & Work -->
+          <section class="panel" id="panel-eduwork">
+            <h3 class="panel-title">Education & Work</h3>
+
+            <div class="two-col">
+              <div class="info-card">
+                <div class="info-title">Education</div>
+                <p class="info-text">
+                  <strong>B.S. Computer Science</strong><br />
+                  Minor: Business Administration
+                </p>
+                <ul class="skill-list">
+                  <li>Programming fundamentals & problem-solving</li>
+                  <li>Systems thinking and structured debugging</li>
+                  <li>Building projects with real deployment</li>
+                </ul>
+              </div>
+
+              <div class="info-card">
+                <div class="info-title">Work & Experience</div>
+                <p class="info-text">
+                  Hands-on experience supporting and improving systems in real environments — collaborating with technical and non-technical teams.
+                </p>
+                <ul class="skill-list">
+                  <li>Technical troubleshooting & root cause analysis</li>
+                  <li>Workflow improvements and quality testing</li>
+                  <li>Building and iterating on internal tools</li>
+                  <li>Working alongside enterprise AI/LLM systems</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="panel-foot">
+              I bring a balance of technical execution and communication — strong delivery without chaos.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- ===========================
+        PAC-MAN MODAL (replacing UI lab)
+    ============================ -->
+    <!-- <div class="modal" id="uiModal" aria-hidden="true">
+    <div class="modal-backdrop" id="uiCloseBackdrop"></div>
+
+    <div class="modal-panel modal-panel--ui" role="dialog" aria-modal="true" aria-label="Pac-Man Arcade">
+        <div class="modal-topbar">
+        <div class="modal-title">
+            Pac-Man Arcade <span class="badge">Canvas Game</span>
+        </div>
+        <button class="icon-btn" id="uiCloseBtn" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <div class="pacman-frame-wrap">
+        <iframe
+            class="pacman-frame"
+            src="pacman_game/index.html"
+            title="Pac-Man Arcade"
+            loading="lazy"
+        ></iframe>
+        </div>
+
+        <p class="hint" style="padding: 0 16px 16px;">
+        Tip: This is a clean JavaScript Canvas game embedded inside your portfolio (great recruiter demo).
+        </p>
+    </div>
+    </div> -->
 
 
-  <button id="modeDemo" class="mode-btn is-active" type="button">Demo</button>
-
-  <button id="modeLive" class="mode-btn" type="button">Live</button>
-
-
-  <span id="modeStatus" class="mode-status">Demo mode: works offline</span>
-
-</div>
-
-<div class="modal-title">
-API Chatbox <span class="badge">Context Engineering</span>
-</div>
-<button class="icon-btn" id="chatCloseBtn" type="button" aria-label="Close">✕</button>
-</div>
-
-<div class="modal-body">
-<!-- LEFT: System + Memory -->
-<aside class="side">
-<h3>System</h3>
-<label class="label">Role / Instructions</label>
-<textarea id="systemPrompt" class="textarea" rows="7">You are a helpful assistant. Use the provided context when relevant. If context is missing, ask a clarifying question.</textarea>
-
-<label class="label">User Profile / Memory</label>
-<textarea id="memory" class="textarea" rows="5">User: Michael Williams
-Goal: Build a clean, modern portfolio + projects.</textarea>
-
-<div class="row">
-<button class="small-btn" id="clearChat" type="button">Clear Chat</button>
-<button class="small-btn" id="saveState" type="button">Save</button>
-</div>
-
-<p class="hint">
-Tip: System + Memory are part of the “context” sent to your API.
-</p>
-</aside>
-
-<!-- CENTER: Chat -->
-<section class="chat">
-<div class="chat-log" id="chatLog" aria-live="polite"></div>
-
-<form class="chat-input" id="chatForm">
-<input
-id="chatMessage"
-class="input"
-type="text"
-placeholder="Ask something… (e.g., 'Improve my portfolio About section')"
-autocomplete="off"
-/>
-<button class="send-btn" type="submit">Send</button>
-</form>
-</section>
-
-<!-- RIGHT: Retrieved Context -->
-<aside class="side">
-<h3>Context</h3>
-<label class="label">Retrieved Context (RAG)</label>
-<textarea id="retrievedContext" class="textarea" rows="10">Paste or auto-load snippets here…</textarea>
-
-<label class="label">Model Settings</label>
-<div class="kv">
-<div class="kv-row">
-<span class="kv-key">Temperature</span>
-<input id="temp" class="kv-input" type="number" step="0.1" min="0" max="2" value="0.7" />
-</div>
-<div class="kv-row">
-<span class="kv-key">Max Tokens</span>
-<input id="maxTokens" class="kv-input" type="number" min="50" max="2000" value="300" />
-</div>
-</div>
-
-<p class="hint">
-This mimics a “context engineering” workflow: system + memory + retrieved context + messages.
-</p>
-</aside>
-</div>
-</div>
-</div>
-
-
-  <script src="script.js"></script>
-
+<script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script defer src="script.js"></script>
 </body>
-
 </html>
-

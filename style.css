@@ -1,219 +1,148 @@
+/* ===========================
+   style.css (FULL)
+   - Includes your full file content as shared
+   - Fixes prefix-order warnings:
+     1) -webkit-mask before mask
+     2) -webkit-mask-composite before mask-composite
+   - Adds missing CSS vars used later (--text / --muted) to :root
+=========================== */
+
 /* RESET */
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-
 html, body { height: 100%; }
 
-
-body {
-
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
-  color: white;
-
-
-  /* THIS is the key: your AI image is the entire background */
-
-  background: url("images/michael-ai.png") center -2% / cover no-repeat fixed;
-
-  overflow-x: hidden;
-
+/* ✅ Make sure vars exist (you use --text / --muted later) */
+:root{
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.68);
 }
 
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: white;
+  background: url("images/michael-ai.png") center -2% / cover no-repeat fixed;
+  overflow-x: hidden;
+}
 
-/* Dark overlay so text is readable (matches the reference look) */
-
+/* Dark overlay so text is readable */
 .overlay {
-
   position: fixed;
-
   inset: 0;
-
   pointer-events: none;
-
   background:
-
     radial-gradient(900px 600px at 50% 15%, rgba(0,0,0,0.15), rgba(0,0,0,0.65)),
-
     linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.80));
-
 }
 
 /* Layout container */
-
 .page {
-
   width: min(980px, 92vw);
-
   margin: 0 auto;
-
   padding-bottom: 70px;
-
   position: relative;
-
   z-index: 2;
-
 }
-
 
 /* HERO */
-
 .hero {
-
   min-height: 88vh;
-
   display: grid;
-
   place-items: center;
-
   text-align: center;
-
   position: relative;
-
 }
-
 
 .hero-content {
-
   transform: translateY(10px);
-
   animation: floatIn 900ms ease-out both;
-
 }
 
-
 @keyframes floatIn {
-
   from { opacity: 0; transform: translateY(26px); }
-
   to   { opacity: 1; transform: translateY(10px); }
-
 }
 
 .name {
-
   font-size: clamp(2.4rem, 5vw, 3.4rem);
-
   font-weight: 800;
-
   letter-spacing: 0.4px;
-
   text-shadow: 0 20px 70px rgba(0,0,0,0.75);
-
 }
 
-
 .tagline {
-
   margin-top: 10px;
-
   font-size: clamp(1rem, 2vw, 1.15rem);
-
   opacity: 0.85;
-
   text-shadow: 0 16px 55px rgba(0,0,0,0.7);
-
 }
 
 /* CTA button */
 .cta {
   margin-top: 18px;
   padding: 12px 24px;
-  border-radius: 999px; 
+  border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.18);
   color: rgba(255,255,255,0.92);
   background: linear-gradient(180deg, rgba(115,160,255,0.40), rgba(70,90,200,0.22));
-/* Glass blur like the reference */
--webkit-backdrop-filter: blur(10px);
- backdrop-filter: blur(10px);
- box-shadow:
- 0 18px 45px rgba(0,0,0,0.40), 0 0 0 10px rgba(120, 155, 255, 0.12);
-cursor: pointer;
-transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.40),
+    0 0 0 10px rgba(120, 155, 255, 0.12);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
 .cta:hover {
-
   transform: translateY(-2px);
-
   border-color: rgba(255,255,255,0.26);
-
   box-shadow:
-
     0 22px 60px rgba(0,0,0,0.48),
-
     0 0 0 12px rgba(120, 155, 255, 0.16);
-
 }
-
 
 .cta:active { transform: translateY(0px) scale(0.99); }
 
-
-/* Subtle fade between hero and About section */
-
+/* Fade between hero and sections */
 .hero-fade {
-
   position: absolute;
-
   left: 0; right: 0; bottom: -12px;
-
   height: 140px;
-
   background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.65));
-
 }
 
 /* SECTIONS */
-
 .section {
-
   padding: 34px 0 12px;
-
   text-align: center;
-
 }
-
 
 .section-title {
-
   font-size: 1.9rem;
-
   font-weight: 800;
-
   margin-bottom: 14px;
-
   text-shadow: 0 18px 60px rgba(0,0,0,0.65);
-
 }
-
 
 .section-text {
-
   max-width: 720px;
-
   margin: 0 auto;
-
   opacity: 0.80;
-
   line-height: 1.6;
-
 }
 
+.section-subtext{
+  margin-top: 14px;
+  font-size: 13px;
+  opacity: 0.65;
+}
 
-/* PROJECT CARDS (row like the reference) */
-
+/* PROJECT CARDS */
 .projects-row {
-
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 18px;
-
   margin-top: 18px;
-
 }
 
 .project-card {
@@ -229,550 +158,1354 @@ transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease
   backdrop-filter: blur(12px);
   box-shadow: 0 26px 75px rgba(0,0,0,0.35);
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
-  }
-
+}
 
 .project-card:hover {
   transform: translateY(-3px);
   border-color: rgba(255,255,255,0.22);
   box-shadow: 0 30px 95px rgba(0,0,0,0.45);
 }
+
 .project-card span {
-  font-weight: 700;
+  font-weight: 750;
   letter-spacing: 0.2px;
 }
 
 /* CONTACT */
-
-.contact {
-
-  margin-top: 10px;
-
-  opacity: 0.85;
-
+/* Contact (Glass) */
+.contact{
+  margin-top: 24px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
 }
 
-
-.contact a {
-
-  color: rgba(200,220,255,0.95);
-
-  text-decoration: none;
-
-  border-bottom: 1px solid rgba(200,220,255,0.35);
-
+.contact::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(120,155,255,0.25), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(160,110,255,0.18), transparent 55%),
+    radial-gradient(circle at 50% 90%, rgba(120,255,225,0.12), transparent 55%);
+  filter: blur(18px);
+  animation: floatGlow 10s ease-in-out infinite alternate;
+  pointer-events:none;
 }
 
-
-.contact a:hover {
-
-  border-bottom-color: rgba(200,220,255,0.7);
-
+@keyframes floatGlow{
+  0%   { transform: translate3d(-1%, -1%, 0) scale(1.02); opacity: .75; }
+  100% { transform: translate3d(1%, 1%, 0) scale(1.06); opacity: .95; }
 }
 
+.muted{
+  color: var(--muted);
+  margin: 0 0 14px;
+}
 
+.contact-form{
+  display: grid;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.field label{
+  display:block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+.field input,
+.field textarea{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  outline: none;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.field input:focus,
+.field textarea:focus{
+  border-color: rgba(120,155,255,0.40);
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+/* Animated Send Button */
+.cta-send{
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-send[disabled]{
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.cta-send .btn-text{
+  position: relative;
+  z-index: 2;
+}
+
+.cta-send .btn-glow{
+  position:absolute;
+  inset:-2px;
+  background: linear-gradient(90deg,
+    rgba(120,155,255,0.0),
+    rgba(120,155,255,0.25),
+    rgba(160,110,255,0.22),
+    rgba(120,255,225,0.15),
+    rgba(120,155,255,0.0)
+  );
+  transform: translateX(-60%);
+  animation: shimmer 2.6s ease-in-out infinite;
+  filter: blur(10px);
+  opacity: 0.9;
+}
+
+@keyframes shimmer{
+  0%   { transform: translateX(-70%); }
+  50%  { transform: translateX(0%); }
+  100% { transform: translateX(70%); }
+}
+
+.form-status{
+  min-height: 18px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.form-status.ok{ color: rgba(120,255,225,0.85); }
+.form-status.err{ color: rgba(255,120,140,0.9); }
+
+/* honeypot hidden */
+.hp{
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.footer {
+  margin-top: 26px;
+  text-align: center;
+  opacity: 0.45;
+}
+
+/* MOBILE */
+@media (max-width: 860px) {
+  body { background-attachment: scroll; }
+  .projects-row { grid-template-columns: 1fr; }
+}
 
 /* =======================
-
-   CHAT MODAL (Context Layout)
-
+   MODALS (shared)
 ======================= */
-
 .modal {
-
   position: fixed;
-
   inset: 0;
-
   display: none;
-
   z-index: 50;
-
 }
-
 
 .modal.is-open { display: block; }
 
-
 .modal-backdrop{
-
   position:absolute;
-
   inset:0;
-
   background: rgba(0,0,0,0.6);
-
 }
-
 
 .modal-panel{
-
   position: relative;
-
   width: min(1100px, 94vw);
-
   height: min(720px, 88vh);
-
   margin: 5vh auto;
-
   border-radius: 16px;
-
   border: 1px solid rgba(255,255,255,0.14);
-
   background: rgba(12, 14, 28, 0.55);
-
   -webkit-backdrop-filter: blur(14px);
-
   backdrop-filter: blur(14px);
-
   box-shadow: 0 30px 120px rgba(0,0,0,0.55);
-
   overflow: hidden;
-
 }
-
 
 .modal-topbar{
-
   height: 56px;
-
   display:flex;
-
   align-items:center;
-
+  gap: 12px;
   justify-content: space-between;
-
   padding: 0 14px 0 16px;
-
   border-bottom: 1px solid rgba(255,255,255,0.10);
-
   background: rgba(10, 12, 24, 0.35);
-
 }
-
 
 .modal-title{
-
   font-weight: 800;
-
   letter-spacing: 0.2px;
-
+  white-space: nowrap;
 }
-
 
 .badge{
-
   margin-left: 10px;
-
   font-size: 12px;
-
   padding: 4px 10px;
-
   border-radius: 999px;
-
   border: 1px solid rgba(255,255,255,0.14);
-
   background: rgba(120,155,255,0.15);
-
   color: rgba(255,255,255,0.9);
-
 }
-
 
 .icon-btn{
-
   width: 40px;
-
   height: 40px;
-
   border-radius: 10px;
-
   border: 1px solid rgba(255,255,255,0.14);
-
   background: rgba(255,255,255,0.06);
-
   color: rgba(255,255,255,0.9);
-
   cursor: pointer;
-
 }
 
+@media (max-width: 980px){
+  .modal-panel{ height: min(860px, 92vh); }
+}
+
+/* =======================
+   CHAT MODAL (Context Layout)
+======================= */
+.mode{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.mode-label{
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.mode-btn{
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+}
+
+.mode-btn.is-active{
+  background: rgba(120,155,255,0.22);
+  border-color: rgba(255,255,255,0.20);
+}
+
+.mode-status{
+  font-size: 12px;
+  opacity: 0.70;
+}
 
 .modal-body{
-
   height: calc(100% - 56px);
-
   display: grid;
-
   grid-template-columns: 1fr 1.6fr 1fr;
-
 }
 
-
 .side{
-
   padding: 14px;
-
   border-right: 1px solid rgba(255,255,255,0.08);
-
 }
 
 .modal-body .side:last-child{
-
   border-right: none;
-
   border-left: 1px solid rgba(255,255,255,0.08);
-
 }
-
 
 .side h3{
-
   margin-bottom: 10px;
-
   font-size: 14px;
-
   opacity: 0.9;
-
 }
-
 
 .label{
-
   display:block;
-
   margin: 10px 0 6px;
-
   font-size: 12px;
-
   opacity: 0.75;
-
 }
-
 
 .textarea{
-
   width: 100%;
-
   border-radius: 12px;
-
   border: 1px solid rgba(255,255,255,0.12);
-
   background: rgba(255,255,255,0.06);
-
   color: rgba(255,255,255,0.90);
-
   padding: 10px;
-
   outline: none;
-
   resize: vertical;
-
 }
-
 
 .row{
-
   display:flex;
-
   gap: 10px;
-
   margin-top: 10px;
-
 }
-
 
 .small-btn{
-
   flex: 1;
-
   padding: 10px 12px;
-
   border-radius: 12px;
-
   border: 1px solid rgba(255,255,255,0.12);
-
   background: rgba(120,155,255,0.14);
-
   color: rgba(255,255,255,0.92);
-
   cursor: pointer;
-
 }
-
 
 .hint{
-
   margin-top: 10px;
-
   font-size: 12px;
-
   opacity: 0.65;
-
   line-height: 1.4;
-
 }
-
 
 /* Center chat */
-
 .chat{
-
   display:flex;
-
   flex-direction: column;
-
   padding: 14px;
-
 }
-
 
 .chat-log{
-
   flex: 1;
-
   overflow: auto;
-
   padding: 10px;
-
   border-radius: 14px;
-
   border: 1px solid rgba(255,255,255,0.10);
-
   background: rgba(0,0,0,0.18);
-
 }
-
 
 .msg{
-
   max-width: 92%;
-
   margin: 10px 0;
-
   padding: 10px 12px;
-
   border-radius: 14px;
-
   border: 1px solid rgba(255,255,255,0.10);
-
   line-height: 1.45;
-
   white-space: pre-wrap;
-
 }
-
 
 .msg.user{
-
   margin-left: auto;
-
   background: rgba(120,155,255,0.14);
-
 }
-
 
 .msg.assistant{
-
   margin-right: auto;
-
   background: rgba(255,255,255,0.06);
-
 }
-
 
 .chat-input{
-
   display:flex;
-
   gap: 10px;
-
   margin-top: 12px;
-
 }
-
 
 .input{
-
   flex: 1;
-
   padding: 12px 12px;
-
   border-radius: 14px;
-
   border: 1px solid rgba(255,255,255,0.12);
-
   background: rgba(255,255,255,0.06);
-
   color: rgba(255,255,255,0.92);
-
   outline: none;
-
 }
-
 
 .send-btn{
-
   padding: 12px 16px;
-
   border-radius: 14px;
-
   border: 1px solid rgba(255,255,255,0.12);
-
   background: rgba(120,155,255,0.22);
-
   color: rgba(255,255,255,0.92);
-
   cursor: pointer;
-
 }
-
 
 .kv{
-
   margin-top: 6px;
-
   display:flex;
-
   flex-direction: column;
-
   gap: 8px;
-
 }
-
 
 .kv-row{
-
   display:flex;
-
   align-items:center;
-
   justify-content: space-between;
-
   gap: 10px;
-
 }
-
 
 .kv-key{
-
   font-size: 12px;
-
   opacity: 0.75;
-
 }
-
 
 .kv-input{
-
   width: 90px;
-
   padding: 8px 10px;
-
   border-radius: 12px;
-
   border: 1px solid rgba(255,255,255,0.12);
-
   background: rgba(255,255,255,0.06);
-
   color: rgba(255,255,255,0.92);
-
   outline: none;
-
 }
-
-
-
-/* Mode toggle */
-
-.mode{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-}
-
-
-.mode-label{
-
-  font-size: 12px;
-
-  opacity: 0.75;
-
-}
-
-
-.mode-btn{
-
-  padding: 8px 12px;
-
-  border-radius: 999px;
-
-  border: 1px solid rgba(255,255,255,0.14);
-
-  background: rgba(255,255,255,0.06);
-
-  color: rgba(255,255,255,0.9);
-
-  cursor: pointer;
-
-}
-
-
-.mode-btn.is-active{
-
-  background: rgba(120,155,255,0.22);
-
-  border-color: rgba(255,255,255,0.20);
-
-}
-
-
-.mode-status{
-
-  font-size: 12px;
-
-  opacity: 0.70;
-
-}
-
 
 @media (max-width: 980px){
-
   .modal-body{ grid-template-columns: 1fr; }
-
-  .modal-panel{ height: min(820px, 92vh); }
-
   .side{ border-right: none; border-left: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
-
   .modal-body .side:last-child{ border-top: 1px solid rgba(255,255,255,0.08); }
-
 }
 
-
-/* FOOTER */
-
-.footer {
-
-  margin-top: 26px;
-
-  text-align: center;
-
-  opacity: 0.45;
-
+/* =======================
+   WHY HIRE ME
+======================= */
+.modal-panel--why{
+  width: min(980px, 94vw);
+  height: min(680px, 88vh);
 }
 
-
-/* MOBILE */
-
-@media (max-width: 860px) {
-
-  body { background-attachment: scroll; } /* mobile performance */
-
-  .projects-row { grid-template-columns: 1fr; }
-
+.why-wrap{
+  height: calc(100% - 56px);
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
+.tabs{
+  display:flex;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.10);
+}
+
+.tab{
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.90);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.tab.is-active{
+  background: rgba(120,155,255,0.22);
+  border-color: rgba(255,255,255,0.20);
+}
+
+.tab-panels{
+  padding: 16px;
+  overflow: auto;
+}
+
+.panel{
+  display:none;
+  animation: panelIn 180ms ease-out both;
+}
+
+.panel.is-active{ display:block; }
+
+@keyframes panelIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+.panel-title{
+  font-size: 18px;
+  font-weight: 850;
+  margin-bottom: 10px;
+  text-shadow: 0 18px 60px rgba(0,0,0,0.45);
+}
+
+.panel-text{
+  opacity: 0.82;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.panel-foot{
+  margin-top: 12px;
+  opacity: 0.70;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.highlights{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.highlight{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+}
+
+.highlight-title{
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.highlight-text{
+  opacity: 0.78;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.info-card{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+}
+
+.info-title{
+  font-weight: 850;
+  margin-bottom: 8px;
+}
+
+.info-text{
+  opacity: 0.82;
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+.skill-list{
+  margin-left: 18px;
+  opacity: 0.82;
+  line-height: 1.55;
+}
+
+@media (max-width: 860px){
+  .highlights{ grid-template-columns: 1fr; }
+  .two-col{ grid-template-columns: 1fr; }
+}
+
+/* =======================
+   SKILL BUBBLES (per-skill)
+======================= */
+.bubble-grid--skills{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.bubble-card{
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+  display: grid;
+  place-items: center;
+}
+
+.bubble{
+  --p: 0;
+  --ring: 9px;
+  width: 96px;
+  height: 96px;
+  border-radius: 999px;
+
+  background:
+    conic-gradient(
+      rgba(120,155,255,0.92) calc(var(--p) * 1%),
+      rgba(255,255,255,0.10) 0
+    );
+
+  position: relative;
+  box-shadow:
+    0 22px 60px rgba(0,0,0,0.35),
+    0 0 0 10px rgba(120,155,255,0.10);
+  transform: translateZ(0);
+}
+
+.bubble::before{
+  content:"";
+  position:absolute;
+  inset: var(--ring);
+  border-radius: 999px;
+  background: rgba(12, 14, 28, 0.60);
+  border: 1px solid rgba(255,255,255,0.10);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.bubble-inner{
+  position:absolute;
+  inset: 0;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+.bubble-num{
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.4px;
+  line-height: 1;
+}
+
+.bubble-skill{
+  margin-top: 6px;
+  font-size: 11px;
+  opacity: 0.85;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.bubble-card:hover{
+  border-color: rgba(255,255,255,0.22);
+}
+
+.bubble-card:hover .bubble{
+  box-shadow:
+    0 30px 85px rgba(0,0,0,0.45),
+    0 0 0 12px rgba(120,155,255,0.16);
+}
+
+/* Responsive */
+@media (max-width: 980px){
+  .bubble-grid--skills{ grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 560px){
+  .bubble-grid--skills{ grid-template-columns: repeat(2, 1fr); }
+  .bubble{ width: 104px; height: 104px; }
+}
+
+/* =======================
+   UI LAB (simple)
+======================= */
+.modal-panel--ui{
+  width: min(840px, 94vw);
+  height: min(520px, 88vh);
+}
+
+.ui-lab{
+  padding: 16px;
+}
+
+.ui-demo-row{
+  display:flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 16px 0 18px;
+}
+
+.lab-btn{
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(120,155,255,0.16);
+  color: rgba(255,255,255,0.92);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.lab-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.35);
+}
+
+.lab-btn--alt{
+  background: rgba(255,255,255,0.08);
+}
+
+.lab-chip{
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+}
+
+.lab-chip:focus{
+  outline: 2px solid rgba(120,155,255,0.55);
+  outline-offset: 2px;
+}
+
+.ui-cards{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.lab-card{
+  height: 90px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.14);
+  display:grid;
+  place-items:center;
+  font-weight: 800;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.lab-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+}
+
+@media (max-width: 860px){
+  .ui-cards{ grid-template-columns: 1fr; }
+}
+
+/* =======================
+   WHY HIRE ME - OVERVIEW ANIMATIONS
+======================= */
+
+/* Container gets subtle animated color glow */
+#panel-overview{
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+/* Animated gradient blob behind content */
+#panel-overview::before{
+  content:"";
+  position:absolute;
+  width: 520px;
+  height: 520px;
+  left: -140px;
+  top: -170px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(120,155,255,0.45),
+    rgba(160,110,255,0.22),
+    rgba(0,0,0,0) 60%
+  );
+  filter: blur(10px);
+  opacity: 0.0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 550ms ease, transform 550ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Thin animated border glow */
+#panel-overview::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(90deg,
+    rgba(120,155,255,0.55),
+    rgba(160,110,255,0.40),
+    rgba(120,255,225,0.22),
+    rgba(120,155,255,0.55)
+  );
+  opacity: 0.0;
+
+  /* ✅ FIXED ORDER: prefix first, then unprefixed */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  /* ✅ FIXED ORDER: prefix first, then unprefixed */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  transition: opacity 550ms ease;
+  z-index: 0;
+}
+
+/* Animate in when Overview is activated */
+#panel-overview.is-animated::before{
+  opacity: 0.95;
+  transform: translateY(0px) scale(1);
+}
+
+#panel-overview.is-animated::after{
+  opacity: 0.65;
+}
+
+/* Ensure text sits above the blob */
+#panel-overview > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Title pop-in */
+#panel-overview .panel-title{
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#panel-overview.is-animated .panel-title{
+  animation: overviewTitleIn 520ms ease-out forwards;
+}
+
+@keyframes overviewTitleIn{
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Paragraph fade */
+#panel-overview .panel-text{
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#panel-overview.is-animated .panel-text{
+  animation: overviewTextIn 560ms ease-out 70ms forwards;
+}
+
+@keyframes overviewTextIn{
+  to { opacity: 0.86; transform: translateY(0); }
+}
+
+/* Highlights stagger + shimmer */
+#panel-overview .highlight{
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+  border-color: rgba(255,255,255,0.12);
+}
+
+#panel-overview.is-animated .highlight{
+  animation: highlightIn 520ms ease-out forwards;
+}
+
+#panel-overview.is-animated .highlight:nth-child(1){ animation-delay: 120ms; }
+#panel-overview.is-animated .highlight:nth-child(2){ animation-delay: 220ms; }
+#panel-overview.is-animated .highlight:nth-child(3){ animation-delay: 320ms; }
+
+@keyframes highlightIn{
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle animated sheen sweep */
+#panel-overview .highlight::after{
+  content:"";
+  position:absolute;
+  inset: -40px;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(120,155,255,0.18) 45%,
+    rgba(160,110,255,0.12) 55%,
+    transparent 65%
+  );
+  transform: translateX(-60%) rotate(6deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#panel-overview.is-animated .highlight::after{
+  opacity: 1;
+  animation: sheen 1600ms ease-in-out 600ms forwards;
+}
+
+@keyframes sheen{
+  0%   { transform: translateX(-60%) rotate(6deg); }
+  100% { transform: translateX(60%) rotate(6deg); }
+}
+
+/* Make highlight titles a bit more “color blended” */
+#panel-overview .highlight-title{
+  color: rgba(205,225,255,0.95);
+}
+
+#panel-overview .highlight-text{
+  color: rgba(255,255,255,0.82);
+}
+
+/* =======================
+   WHY HIRE ME – SPACING FIX
+======================= */
+
+/* Give the modal body breathing room */
+.why-hire-body{
+  padding: 24px 28px 30px;
+}
+
+/* Add vertical rhythm to panels */
+.panel{
+  margin-top: 16px;
+}
+
+/* Specifically space the Overview panel */
+#panel-overview{
+  padding: 26px 26px 28px;
+}
+
+/* Improve title spacing */
+#panel-overview .panel-title{
+  margin-bottom: 12px;
+}
+
+/* Improve paragraph spacing */
+#panel-overview .panel-text{
+  margin-bottom: 20px;
+  line-height: 1.65;
+}
+
+/* Space out highlight cards */
+#panel-overview .highlight-grid{
+  gap: 18px;
+  margin-top: 14px;
+}
+
+/* Give each highlight card more internal padding */
+#panel-overview .highlight{
+  padding: 18px 20px;
+}
+
+/* Bottom spacing so content doesn’t feel cut off */
+#panel-overview .panel-foot{
+  margin-top: 18px;
+}
+
+/* Tablet & mobile adjustments */
+@media (max-width: 768px){
+  .why-hire-body{
+    padding: 20px 18px 24px;
+  }
+
+  #panel-overview{
+    padding: 22px 18px 24px;
+  }
+}
+
+/* =======================
+   EDUCATION & WORK – GLASS ANIMATION / ALIVE
+======================= */
+
+/* Panel container glow + animated blob (matches overview vibe) */
+#panel-eduwork{
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+/* Animated blob */
+#panel-eduwork::before{
+  content:"";
+  position:absolute;
+  width: 560px;
+  height: 560px;
+  right: -180px;
+  top: -220px;
+  background: radial-gradient(circle at 30% 30%,
+    rgba(120,155,255,0.42),
+    rgba(160,110,255,0.20),
+    rgba(0,0,0,0) 60%
+  );
+  filter: blur(12px);
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+  transition: opacity 550ms ease, transform 550ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Thin border glow */
+#panel-eduwork::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(90deg,
+    rgba(120,155,255,0.55),
+    rgba(160,110,255,0.38),
+    rgba(120,255,225,0.20),
+    rgba(120,155,255,0.55)
+  );
+  opacity: 0;
+
+  /* ✅ FIXED ORDER: prefix first, then unprefixed */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  /* ✅ FIXED ORDER: prefix first, then unprefixed */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  transition: opacity 550ms ease;
+  z-index: 0;
+}
+
+/* Bring blob + border in when active */
+#panel-eduwork.is-animated::before{
+  opacity: 0.95;
+  transform: translateY(0) scale(1);
+}
+#panel-eduwork.is-animated::after{
+  opacity: 0.6;
+}
+
+/* Ensure content above blob */
+#panel-eduwork > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* Title + intro animate in */
+#panel-eduwork .panel-title,
+#panel-eduwork .panel-text{
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#panel-eduwork.is-animated .panel-title{
+  animation: eduTitleIn 520ms ease-out forwards;
+}
+
+#panel-eduwork.is-animated .panel-text{
+  animation: eduTextIn 560ms ease-out 80ms forwards;
+}
+
+@keyframes eduTitleIn{
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes eduTextIn{
+  to { opacity: 0.86; transform: translateY(0); }
+}
+
+/* Make the two cards feel like a timeline */
+#panel-eduwork .two-col{
+  position: relative;
+  margin-top: 12px;
+}
+
+/* Vertical “timeline” line */
+#panel-eduwork .two-col::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(120,155,255,0.0),
+    rgba(120,155,255,0.35),
+    rgba(160,110,255,0.25),
+    rgba(120,155,255,0.0)
+  );
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+#panel-eduwork.is-animated .two-col::before{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dots on the line behind each card */
+#panel-eduwork .info-card{
+  position: relative;
+  opacity: 0;
+  transform: translateY(12px);
+  overflow: hidden;
+}
+
+/* Stagger cards in */
+#panel-eduwork.is-animated .info-card{
+  animation: eduCardIn 520ms ease-out forwards;
+}
+
+#panel-eduwork.is-animated .info-card:nth-child(1){ animation-delay: 140ms; }
+#panel-eduwork.is-animated .info-card:nth-child(2){ animation-delay: 240ms; }
+
+@keyframes eduCardIn{
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Timeline dot */
+#panel-eduwork .info-card::before{
+  content:"";
+  position:absolute;
+  top: 18px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(120,155,255,0.9);
+  box-shadow:
+    0 0 0 6px rgba(120,155,255,0.16),
+    0 18px 55px rgba(0,0,0,0.35);
+  opacity: 0.0;
+  transform: scale(0.9);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+/* Left card dot aligns to the center line */
+#panel-eduwork .info-card:nth-child(1)::before{
+  right: -5px;
+}
+
+/* Right card dot aligns to the center line */
+#panel-eduwork .info-card:nth-child(2)::before{
+  left: -5px;
+}
+
+#panel-eduwork.is-animated .info-card::before{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Add subtle “sheen sweep” to cards (premium) */
+#panel-eduwork .info-card::after{
+  content:"";
+  position:absolute;
+  inset: -40px;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(120,155,255,0.14) 45%,
+    rgba(160,110,255,0.10) 55%,
+    transparent 65%
+  );
+  transform: translateX(-60%) rotate(6deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#panel-eduwork.is-animated .info-card::after{
+  opacity: 1;
+  animation: eduSheen 1600ms ease-in-out 620ms forwards;
+}
+
+@keyframes eduSheen{
+  0%   { transform: translateX(-60%) rotate(6deg); }
+  100% { transform: translateX(60%) rotate(6deg); }
+}
+
+/* Mobile: remove center line (since it stacks) */
+@media (max-width: 860px){
+  #panel-eduwork .two-col::before{ display:none; }
+  #panel-eduwork .info-card:nth-child(1)::before,
+  #panel-eduwork .info-card:nth-child(2)::before{
+    left: 14px;
+    right: auto;
+  }
+}
+
+/* =======================
+   EDUCATION & WORK – FINAL SPACING FIX
+======================= */
+
+/* Give the entire panel more bottom space */
+#panel-eduwork{
+  padding-bottom: 36px;
+}
+
+/* Add vertical separation between title and cards */
+#panel-eduwork .panel-title{
+  margin-bottom: 16px;
+}
+
+/* Add breathing room before the two-card layout */
+#panel-eduwork .two-col{
+  margin-top: 18px;
+  margin-bottom: 22px;
+}
+
+/* Space the cards away from the bottom */
+#panel-eduwork .info-card{
+  padding: 20px 22px;
+}
+
+/* Footer text spacing */
+#panel-eduwork .panel-foot{
+  margin-top: 24px;
+  padding-bottom: 6px;
+}
+
+/* Slightly increase line-height for bullets */
+#panel-eduwork ul li{
+  line-height: 1.6;
+}
+
+/* Mobile: extra bottom padding so nothing feels cut */
+@media (max-width: 860px){
+  #panel-eduwork{
+    padding-bottom: 40px;
+  }
+
+  #panel-eduwork .two-col{
+    margin-bottom: 26px;
+  }
+}
+
+/* ===========================
+   EDUWORK – ALIGNMENT FIX
+   (Title + Footer indent to match cards)
+=========================== */
+
+/* Create a consistent inner content column */
+#panel-eduwork{
+  padding: 28px 32px 56px !important;
+}
+
+/* Align title with cards */
+#panel-eduwork > .panel-title{
+  margin: 0 0 22px 0 !important;
+  padding-left: 2px; /* subtle optical alignment */
+}
+
+/* Cards container already aligned – just spacing */
+#panel-eduwork > .two-col{
+  margin: 0 0 28px 0 !important;
+}
+
+/* Align footer text with cards */
+#panel-eduwork > .panel-foot{
+  margin: 0 !important;
+  padding-left: 2px;
+  padding-top: 18px;
+  line-height: 1.65;
+  opacity: 0.86;
+}
+
+/* Optional divider stays aligned */
+#panel-eduwork > .panel-foot::before{
+  content:"";
+  display:block;
+  height: 1px;
+  margin-bottom: 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(120,155,255,0.0),
+    rgba(120,155,255,0.35),
+    rgba(160,110,255,0.22),
+    rgba(120,155,255,0.0)
+  );
+}
+
+/* Mobile tuning */
+@media (max-width: 860px){
+  #panel-eduwork{
+    padding: 24px 20px 60px !important;
+  }
+
+  #panel-eduwork > .panel-title,
+  #panel-eduwork > .panel-foot{
+    padding-left: 0;
+  }
+}
+
+/* ===========================
+   CONTEXT ENGINEERING CHAT — SCROLL FIX (DESKTOP + MOBILE)
+   Targets your existing HTML: .chat, #chatLog, .chat-input
+=========================== */
+
+/* Make the center chat column a fixed-height flex layout */
+#chatModal .modal-body .chat{
+  display: flex;
+  flex-direction: column;
+  min-height: 0;            /* CRITICAL for flex children scrolling */
+  height: 72vh;             /* desktop visible area */
+  max-height: 72vh;
+  overflow: hidden;         /* only chat-log scrolls */
+}
+
+/* The messages area becomes the scroll container */
+#chatModal .chat-log{
+  flex: 1 1 auto;
+  min-height: 0;            /* CRITICAL for scroll to work */
+  overflow-y: auto;
+  padding-right: 10px;      /* space for scrollbar */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Keep the input visible (pinned at bottom of chat column) */
+#chatModal .chat-input{
+  flex: 0 0 auto;
+  position: sticky;
+  bottom: 0;
+  padding-top: 12px;
+  background: linear-gradient(
+    to top,
+    rgba(10,10,18,0.95),
+    rgba(10,10,18,0.70),
+    rgba(10,10,18,0.0)
+  );
+}
+
+/* Mobile: use more screen height */
+@media (max-width: 860px){
+  #chatModal .modal-body .chat{
+    height: 78vh;
+    max-height: 78vh;
+  }
+}
+
+/* Desktop scrollbar styling (optional) */
+#chatModal .chat-log::-webkit-scrollbar{
+  width: 8px;
+}
+#chatModal .chat-log::-webkit-scrollbar-thumb{
+  background: rgba(120,155,255,0.30);
+  border-radius: 999px;
+}
+#chatModal .chat-log::-webkit-scrollbar-thumb:hover{
+  background: rgba(120,155,255,0.45);
+}
+#chatModal .chat-log::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+/* ===========================
+   PAC-MAN MODAL EMBED
+=========================== */
+.pacman-frame-wrap{
+  padding: 16px;
+}
+
+.pacman-frame{
+  width: 100%;
+  height: 88vh;             /* BIG */
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.25);
+}
+
+/* Make the modal roomy for a game */
+.modal-panel--ui{
+  max-width: 1100px;
+  width: min(1100px, 96vw);
+}

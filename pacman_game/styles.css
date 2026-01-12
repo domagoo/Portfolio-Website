@@ -1,0 +1,334 @@
+:root{
+  --bg0:#070a14;
+  --glass: rgba(255,255,255,0.07);
+  --stroke: rgba(255,255,255,0.14);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.68);
+  --shadow: 0 18px 60px rgba(0,0,0,0.45);
+}
+
+*{ box-sizing:border-box; }
+
+html, body{ height:100%; }
+
+body{
+  margin:0;
+  color:var(--text);
+  font-family:"Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  background:
+    radial-gradient(900px 520px at 25% 15%, rgba(120,155,255,0.22), transparent 60%),
+    radial-gradient(900px 520px at 80% 30%, rgba(160,110,255,0.18), transparent 60%),
+    radial-gradient(900px 520px at 60% 85%, rgba(120,255,225,0.10), transparent 60%),
+    linear-gradient(180deg, #070a14, #050712);
+
+  /* critical: arrow keys never scroll page */
+  overflow:hidden;
+}
+
+/* =====================
+   LAYOUT
+===================== */
+
+.game-shell{
+  max-width:1100px;
+  margin:0 auto;
+  padding:18px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.game-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:12px;
+}
+
+.title{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.title-big{
+  font-size:22px;
+  font-weight:800;
+}
+
+/* Firefox-safe pill */
+.pill{
+  display:inline-flex;
+  width:-moz-fit-content;
+  width:fit-content;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid var(--stroke);
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stats{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.stat{
+  min-width:92px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid var(--stroke);
+  box-shadow:0 10px 40px rgba(0,0,0,0.25);
+}
+
+.stat .k{ font-size:11px; color:var(--muted); }
+.stat .v{ font-size:16px; font-weight:800; }
+
+/* =====================
+   GLASS
+===================== */
+
+.glass{
+  background:var(--glass);
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+/* Firefox fallback */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+  .glass{ background:rgba(255,255,255,0.10); }
+}
+
+/* =====================
+   GAME AREA
+===================== */
+
+.game-main{
+  flex:1;
+  min-height:0;
+  display:flex;
+}
+
+.board{
+  width:100%;
+  height:100%;
+  padding:16px;
+  display:grid;
+  grid-template-rows:1fr auto;
+  gap:12px;
+  overflow:hidden;
+  position:relative;
+}
+
+/* glow */
+.board::before{
+  content:"";
+  position:absolute;
+  width:560px;
+  height:560px;
+  right:-220px;
+  top:-260px;
+  background:radial-gradient(circle at 30% 30%,
+    rgba(120,155,255,0.42),
+    rgba(160,110,255,0.20),
+    rgba(0,0,0,0) 60%
+  );
+  filter:blur(12px);
+  pointer-events:none;
+}
+
+/* stage MUST stretch */
+/* === Ambient side animations (no HTML changes) === */
+
+.stage{
+  position: relative; /* required for pseudo-elements */
+  isolation: isolate; /* keeps glow layers contained */
+}
+
+/* Left + right neon glow panels */
+.stage::before,
+.stage::after{
+  content:"";
+  position:absolute;
+  top: 0;
+  bottom: 0;
+  width: 32%;
+  z-index: 0;             /* behind the canvas */
+  pointer-events: none;   /* never block clicks */
+  opacity: 0.95;
+  filter: blur(10px);
+  mix-blend-mode: screen;
+
+  background:
+    radial-gradient(220px 220px at 30% 25%, rgba(120,155,255,0.35), transparent 60%),
+    radial-gradient(260px 240px at 65% 55%, rgba(160,110,255,0.25), transparent 65%),
+    radial-gradient(240px 260px at 40% 80%, rgba(120,255,225,0.14), transparent 70%);
+
+  animation: sideGlow 8.5s ease-in-out infinite;
+}
+
+.stage::before{ left: 0; }
+.stage::after{
+  right: 0;
+  transform: scaleX(-1);  /* mirror the glow */
+  animation-duration: 9.5s;
+}
+
+/* Floating particle “stars” layer */
+.stage .fx{
+  position:absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events:none;
+  opacity: 0.55;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.20) 0 1px, transparent 2px),
+    radial-gradient(circle at 20% 70%, rgba(255,255,255,0.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,0.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 20%, rgba(255,255,255,0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 85% 35%, rgba(255,255,255,0.10) 0 1px, transparent 2px),
+    radial-gradient(circle at 92% 75%, rgba(255,255,255,0.12) 0 1px, transparent 2px);
+
+  animation: floatStars 10s linear infinite;
+}
+
+/* Make sure canvas stays ABOVE FX layers */
+canvas{
+  position: relative;
+  z-index: 2;
+}
+
+/* Animations */
+@keyframes sideGlow{
+  0%   { transform: translateY(-2%) scale(1); }
+  50%  { transform: translateY(2%)  scale(1.03); }
+  100% { transform: translateY(-2%) scale(1); }
+}
+
+@keyframes floatStars{
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-18px); }
+}
+
+
+/* canvas fills stage */
+/* canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:12px;
+  background:rgba(0,0,0,0.26);
+  border:1px solid rgba(255,255,255,0.10);
+  outline:none;
+} */
+
+/* =====================
+   HUD
+===================== */
+
+.hud{
+  padding:12px;
+}
+
+.hud-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  cursor:pointer;
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:700;
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.16);
+  background:linear-gradient(
+    180deg,
+    rgba(120,155,255,0.22),
+    rgba(120,155,255,0.10)
+  );
+  transition:transform 160ms ease, filter 160ms ease;
+}
+
+.btn:hover{ transform:translateY(-1px); filter:brightness(1.06); }
+.btn:active{ transform:none; filter:brightness(0.98); }
+
+.btn-alt{
+  background:linear-gradient(
+    180deg,
+    rgba(160,110,255,0.22),
+    rgba(160,110,255,0.10)
+  );
+}
+
+.btn-ghost{
+  background:rgba(255,255,255,0.06);
+}
+
+.hint{
+  margin-top:10px;
+  font-size:12.5px;
+  color:var(--muted);
+}
+
+.status{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(0,0,0,0.18);
+  font-weight:600;
+}
+
+/* =====================
+   FOOTER + BACK
+===================== */
+
+.game-foot{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.sep{ opacity:0.6; }
+
+.back-btn{
+  margin-top:6px;
+  display:inline-flex;
+  width:-moz-fit-content;
+  width:fit-content;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.06);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.back-btn:hover{
+  background:rgba(255,255,255,0.12);
+  color:var(--text);
+}
+
+/* =====================
+   MOBILE
+===================== */
+
+@media (max-width:520px){
+  .stats{ justify-content:flex-start; }
+}
