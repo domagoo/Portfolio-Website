@@ -343,6 +343,38 @@ openUiDemo?.addEventListener("click", (e) => {
 uiCloseBtn?.addEventListener("click", () => closeModal(uiModal));
 uiCloseBackdrop?.addEventListener("click", () => closeModal(uiModal));
 
+/* ============================
+   JOB TRACKER AI (opens Next.js app)
+============================ */
+function openJobTracker() {
+  // local Next.js app
+  const LOCAL = "http://localhost:3000/dashboard";
+
+  // production (set this after you deploy job-tracker)
+  const PROD = "https://YOUR-JOB-TRACKER-URL.vercel.app/dashboard";
+
+  const isLocal =
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1";
+
+  const url = isLocal ? LOCAL : PROD;
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+// One handler for all your cards/buttons using data-open
+document.querySelectorAll("[data-open]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const key = btn.getAttribute("data-open");
+
+    if (key === "job-tracker") {
+      openJobTracker();
+      return;
+    }
+
+    // keep your existing logic for other buttons here (if you add more later)
+  });
+});
+
 
 /* ============================
    ESC KEY HANDLING
