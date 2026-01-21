@@ -302,6 +302,297 @@ tabButtons.forEach((btn) => {
 });
 
 /* ============================
+   RESUME ANALYZER MODAL
+============================ */
+const openResumeAnalyzer = document.getElementById("openResumeAnalyzer");
+const resumeModal = document.getElementById("resumeModal");
+const resumeCloseBtn = document.getElementById("resumeCloseBtn");
+const resumeCloseBackdrop = document.getElementById("resumeCloseBackdrop");
+
+openResumeAnalyzer?.addEventListener("click", (e) => {
+  e.preventDefault();
+  openModal(resumeModal);
+});
+
+/* ============================
+   RESUME ANALYZER — EXAMPLE DATA
+============================ */
+/* ============================
+   RESUME ANALYZER — LOGIC
+============================ */
+const resumeTextEl = document.getElementById("resumeText");
+const jobTextEl = document.getElementById("jobText");
+const analyzeBtnEl = document.getElementById("analyzeResume");
+const clearBtnEl = document.getElementById("clearResume");
+
+const resumeScoreEl = document.getElementById("resumeScore");
+const missingKeywordsEl = document.getElementById("missingKeywords");
+const resumeSuggestionsEl = document.getElementById("resumeSuggestions");
+
+// Quick sanity check in console:
+console.log("Resume Analyzer elements:", {
+  resumeTextEl,
+  jobTextEl,
+  analyzeBtnEl,
+  clearBtnEl,
+  resumeScoreEl,
+  missingKeywordsEl,
+  resumeSuggestionsEl
+});
+
+const STOP_WORDS = new Set([
+  "a","an","the","and","or","but","if","then","than","to","of","in","on","for","with","as","at","by",
+  "is","are","was","were","be","been","being","it","this","that","these","those","you","your","we",
+  "our","they","their","from","into","over","under","within","across","per","etc"
+]);
+
+function normalizeWords(text) {
+  return (text || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s\+\#\-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function extractKeywords(text) {
+  const words = normalizeWords(text);
+  const counts = new Map();
+
+  for (const w of words) {
+    if (w.length < 3) continue;
+    if (STOP_WORDS.has(w)) continue;
+    counts.set(w, (counts.get(w) || 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20)
+    .map(([word]) => word);
+}
+
+function setSuggestions(items) {
+  if (!resumeSuggestionsEl) return;
+  resumeSuggestionsEl.innerHTML = "";
+  items.forEach((t) => {
+    const li = document.createElement("li");
+    li.textContent = t;
+    resumeSuggestionsEl.appendChild(li);
+  });
+}
+
+analyzeBtnEl?.addEventListener("click", () => {
+  console.log("Analyze clicked ✅");
+
+  const resume = resumeTextEl?.value || "";
+  const job = jobTextEl?.value || "";
+
+  if (!resume.trim() || !job.trim()) {
+    if (resumeScoreEl) resumeScoreEl.textContent = "Match Score: — (paste both resume + job description)";
+    if (missingKeywordsEl) missingKeywordsEl.textContent = "—";
+    setSuggestions(["Paste both fields, then click Analyze."]);
+    return;
+  }
+
+  const jobKeywords = extractKeywords(job);
+  const resumeWords = new Set(normalizeWords(resume));
+
+  const matched = jobKeywords.filter((k) => resumeWords.has(k));
+  const missing = jobKeywords.filter((k) => !resumeWords.has(k));
+
+  const score = Math.round((matched.length / Math.max(jobKeywords.length, 1)) * 100);
+
+  if (resumeScoreEl) {
+    resumeScoreEl.textContent = `Match Score: ${score}% (${matched.length}/${jobKeywords.length} keywords matched)`;
+  }
+
+  if (missingKeywordsEl) {
+    missingKeywordsEl.textContent = missing.length ? missing.join(", ") : "None — great match.";
+  }
+
+  setSuggestions([
+    `Add 2–3 bullets that include: ${missing.slice(0, 4).join(", ") || "the job’s top keywords"}.`,
+    "Mirror the job title and tools in your Summary (if true).",
+    "Put the most relevant project first and include measurable impact (time saved, users, accuracy).",
+    "Use ATS-friendly formatting: standard headings, consistent dates, simple layout."
+  ]);
+});
+
+clearBtnEl?.addEventListener("click", () => {
+  console.log("Clear clicked ✅");
+
+  if (resumeTextEl) resumeTextEl.value = "";
+  if (jobTextEl) jobTextEl.value = "";
+
+  if (resumeScoreEl) resumeScoreEl.textContent = "Match Score: —";
+  if (missingKeywordsEl) missingKeywordsEl.textContent = "—";
+  setSuggestions(["—"]);
+});
+
+
+// Close via X button
+resumeCloseBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();           // IMPORTANT
+  closeModal(resumeModal);
+});
+
+// Close via backdrop
+resumeCloseBackdrop?.addEventListener("click", () => {
+  closeModal(resumeModal);
+});
+
+/* ============================
+   IT TROUBLESHOOTING SIMULATOR
+============================ */
+
+/* ---------- Scenario Data ---------- */
+const TROUBLESHOOT_SCENARIOS = {
+  boot: {
+    question: "The PC powers on but shows no display. What is your FIRST step?",
+    choices: [
+      {
+        text: "Check monitor and cable connections",
+        correct: true,
+        explanation: "Always verify external connections before internal hardware changes."
+      },
+      {
+        text: "Replace the motherboard",
+        correct: false,
+        explanation: "Major hardware replacement should never be the first step."
+      },
+      {
+        text: "Reinstall the operating system",
+        correct: false,
+        explanation: "Software fixes come after confirming hardware output."
+      }
+    ]
+  },
+
+  network: {
+    question: "Multiple users report no internet access. What should you check first?",
+    choices: [
+      {
+        text: "Verify router and network connectivity",
+        correct: true,
+        explanation: "Checking shared infrastructure helps isolate the root cause."
+      },
+      {
+        text: "Replace individual laptops",
+        correct: false,
+        explanation: "A shared issue points to the network, not individual devices."
+      },
+      {
+        text: "Reset user passwords",
+        correct: false,
+        explanation: "Authentication issues do not affect network connectivity."
+      }
+    ]
+  },
+
+  battery: {
+    question: "A mobile device battery drains quickly. What is the FIRST action?",
+    choices: [
+      {
+        text: "Check battery health and usage statistics",
+        correct: true,
+        explanation: "Gathering data comes before hardware replacement."
+      },
+      {
+        text: "Replace the battery immediately",
+        correct: false,
+        explanation: "You should diagnose the issue before replacing components."
+      },
+      {
+        text: "Factory reset the device",
+        correct: false,
+        explanation: "This is a last-resort troubleshooting step."
+      }
+    ]
+  }
+};
+
+/* ---------- Element References ---------- */
+const openTroubleshootSim = document.getElementById("openTroubleshootSim");
+const troubleshootModal = document.getElementById("troubleshootModal");
+const troubleshootCloseBtn = document.getElementById("troubleshootCloseBtn");
+const troubleshootCloseBackdrop = document.getElementById("troubleshootCloseBackdrop");
+
+const scenarioSelect = document.getElementById("scenarioSelect");
+const scenarioPanel = document.getElementById("scenarioPanel");
+const scenarioQuestion = document.getElementById("scenarioQuestion");
+const scenarioChoices = document.getElementById("scenarioChoices");
+
+/* ---------- Open / Close Modal ---------- */
+openTroubleshootSim?.addEventListener("click", (e) => {
+  e.preventDefault();
+  openModal(troubleshootModal);
+});
+
+troubleshootCloseBtn?.addEventListener("click", () => {
+  closeModal(troubleshootModal);
+});
+
+troubleshootCloseBackdrop?.addEventListener("click", () => {
+  closeModal(troubleshootModal);
+});
+
+/* ---------- Scenario Selection ---------- */
+scenarioSelect?.addEventListener("change", () => {
+  const key = scenarioSelect.value;
+  const scenario = TROUBLESHOOT_SCENARIOS[key];
+
+  // If no scenario selected
+  if (!scenario) {
+    scenarioPanel.classList.remove("is-visible");
+    scenarioQuestion.textContent = "";
+    scenarioChoices.innerHTML = "";
+    return;
+  }
+
+  // Show panel
+  scenarioPanel.classList.add("is-visible");
+
+  // Set question
+  scenarioQuestion.textContent = scenario.question;
+
+  // Clear old choices
+  scenarioChoices.innerHTML = "";
+
+  // Render choices
+  scenario.choices.forEach((choice) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "small-btn troubleshoot-choice";
+    btn.textContent = choice.text;
+
+    btn.addEventListener("click", () => {
+      // Disable all buttons after selection
+      scenarioChoices.querySelectorAll("button").forEach((b) => {
+        b.disabled = true;
+      });
+
+      // Mark correct / incorrect
+      btn.classList.add(choice.correct ? "is-correct" : "is-wrong");
+
+      // Add explanation text
+      const explanation = document.createElement("span");
+      explanation.textContent = choice.explanation;
+      btn.appendChild(explanation);
+    });
+
+    scenarioChoices.appendChild(btn);
+  });
+});
+
+/* ---------- ESC Key Support ---------- */
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (troubleshootModal?.classList.contains("is-open")) {
+    closeModal(troubleshootModal);
+  }
+});
+
+
+/* ============================
    SKILL BUBBLE ANIMATION
 ============================ */
 function animateSkillBubbles() {
@@ -384,4 +675,5 @@ document.addEventListener("keydown", (e) => {
   if (chatModal?.classList.contains("is-open")) closeModal(chatModal);
   if (whyHireModal?.classList.contains("is-open")) closeModal(whyHireModal);
   if (uiModal?.classList.contains("is-open")) closeModal(uiModal);
+  if (resumeModal?.classList.contains("is-open")) closeModal(resumeModal);
 });

@@ -1664,3 +1664,208 @@ body {
   max-width: 1100px;
   width: min(1100px, 96vw);
 }
+
+/* ===========================
+   RESUME ANALYZER MODAL
+=========================== */
+
+/* Override the shared 3-column .modal-body layout for this modal only */
+#resumeModal .modal-body{
+  grid-template-columns: 1fr;
+}
+
+/* Nice readable single-column content spacing */
+#resumeModal .resume-analyzer{
+  padding: 16px;
+  width: 100%;
+}
+
+/* Spacing helpers */
+#resumeModal .resume-analyzer__hint{
+  margin-bottom: 10px;
+}
+
+#resumeModal .resume-analyzer__label{
+  margin-top: 10px;
+}
+
+#resumeModal .resume-analyzer__actions{
+  margin-top: 12px;
+  gap: 10px;
+}
+
+/* Results card styling */
+#resumeModal .resume-analyzer__results{
+  margin-top: 14px;
+  padding: 14px;
+}
+
+#resumeModal .resume-analyzer__results-title{
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+#resumeModal .resume-analyzer__subhead{
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+#resumeModal .resume-analyzer__list{
+  margin: 8px 0 0 18px;
+}
+
+/* Optional: make results scroll if content grows */
+#resumeModal .resume-analyzer{
+  max-height: calc(100% - 56px);
+  overflow: auto;
+}
+
+/* ===========================
+   RESUME ANALYZER — EXAMPLES
+=========================== */
+
+#resumeModal .resume-analyzer__examples{
+  margin-bottom: 14px;
+  padding: 14px;
+}
+
+#resumeModal .resume-analyzer__examples-title{
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+#resumeModal .resume-analyzer__examples-list{
+  margin-left: 18px;
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+#resumeModal .resume-analyzer__example-btn{
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* ===========================
+   IT TROUBLESHOOTING SIMULATOR
+=========================== */
+
+/* ===========================
+   IT TROUBLESHOOTING SIMULATOR
+=========================== */
+
+#troubleshootModal .modal-body {
+  grid-template-columns: 1fr;
+}
+
+.troubleshoot-sim {
+  padding: 16px;
+  width: 100%;
+}
+
+.troubleshoot-select {
+  margin-top: 6px;
+}
+
+/* Hidden by default */
+.troubleshoot-panel {
+  margin-top: 14px;
+  padding: 14px;
+  display: none;
+}
+
+/* JS toggles this */
+.troubleshoot-panel.is-visible {
+  display: block;
+}
+
+.troubleshoot-question {
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.45;
+}
+
+.troubleshoot-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.troubleshoot-choice {
+  text-align: left;
+}
+
+.troubleshoot-choice.is-correct {
+  background: rgba(120, 255, 225, 0.22);
+  border-color: rgba(120, 255, 225, 0.55);
+}
+
+.troubleshoot-choice.is-wrong {
+  background: rgba(255, 120, 140, 0.18);
+  border-color: rgba(255, 120, 140, 0.45);
+}
+
+.troubleshoot-choice span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+
+/* ===========================
+   FIX: TROUBLESHOOTING SELECT
+=========================== */
+
+/* Base select reset */
+#troubleshootModal select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+  height: 44px;                 /* consistent height */
+  padding: 10px 44px 10px 12px; /* space for arrow */
+  border-radius: 12px;
+
+  background-color: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+
+  font-size: 14px;
+  line-height: 1.2;
+
+  cursor: pointer;
+}
+
+/* Custom dropdown arrow */
+#troubleshootModal select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.6) 50%),
+    linear-gradient(135deg, rgba(255,255,255,0.6) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 18px,
+    calc(100% - 16px) 18px;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* Focus state */
+#troubleshootModal select:focus {
+  outline: none;
+  border-color: rgba(120,155,255,0.45);
+  background-color: rgba(255,255,255,0.08);
+}
+
+/* Dropdown options (when opened) */
+#troubleshootModal select option {
+  background: rgb(20, 22, 40);
+  color: white;
+}
+
+/* Prevent weird highlight on selection */
+#troubleshootModal select option:checked {
+  background: rgba(120,155,255,0.35);
+}
+
+

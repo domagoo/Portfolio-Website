@@ -55,6 +55,14 @@
           <span>Job Tracker AI</span>
         </a>
 
+        <a class="project-card" href="#" id="openResumeAnalyzer" aria-label="AI Resume Analyzer">
+          <span>AI Resume Analyzer</span>
+        </a>
+
+        <a class="project-card" href="#" id="openTroubleshootSim" aria-label="IT Troubleshooting Simulator">
+          <span>IT Troubleshooting Simulator</span>
+        </a>
+
 
 
       </div>
@@ -340,7 +348,118 @@ Style: concise, practical, modern.</textarea>
         </div>
       </div>
     </div>
+
+
   </div>
+
+  <!-- ===========================
+     AI RESUME ANALYZER MODAL
+============================ -->
+    <div class="modal" id="resumeModal" aria-hidden="true">
+      <div class="modal-backdrop" id="resumeCloseBackdrop"></div>
+
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-label="AI Resume Analyzer">
+        <div class="modal-topbar">
+          <div class="modal-title">
+            AI Resume Analyzer <span class="badge">ATS + Match Score</span>
+          </div>
+          <button class="icon-btn" id="resumeCloseBtn" type="button" aria-label="Close">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <section class="resume-analyzer">
+            <div class="glass resume-analyzer__examples">
+              <div class="resume-analyzer__examples-title">Example Tips</div>
+
+              <ul class="resume-analyzer__examples-list">
+                <li>Paste a real resume (plain text works best — no formatting needed).</li>
+                <li>Paste the full job description, including required skills and tools.</li>
+                <li>Match score is based on keyword overlap (similar to ATS systems).</li>
+                <li>Only add missing keywords if they truthfully reflect your experience.</li>
+              </ul>
+
+              <button class="small-btn resume-analyzer__example-btn" id="fillExample">
+                Use Example Data
+              </button>
+            </div>
+
+            <p class="hint resume-analyzer__hint">
+              Paste your resume and a job description to get a match score + missing keywords.
+            </p>
+
+            <label class="label" for="resumeText">Resume (paste text)</label>
+            <textarea id="resumeText" class="textarea" rows="7" placeholder="Paste your resume text here..."></textarea>
+
+            <label class="label resume-analyzer__label" for="jobText">Job Description</label>
+            <textarea id="jobText" class="textarea" rows="7" placeholder="Paste the job description here..."></textarea>
+
+            <div class="row resume-analyzer__actions">
+              <button class="small-btn" id="analyzeResume" type="button">Analyze</button>
+              <button class="small-btn" id="clearResume" type="button">Clear</button>
+            </div>
+
+            <div class="glass resume-analyzer__results">
+              <div class="resume-analyzer__results-title">Results</div>
+
+              <div id="resumeScore" class="muted">Match Score: —</div>
+
+              <div class="resume-analyzer__subhead">Missing Keywords</div>
+              <div id="missingKeywords" class="muted">—</div>
+
+              <div class="resume-analyzer__subhead">Suggested Improvements</div>
+              <ul id="resumeSuggestions" class="muted resume-analyzer__list">
+                <li>—</li>
+              </ul>
+            </div>
+
+            <p class="hint">
+              Tip: This demo uses keyword matching now — you can upgrade to an API-powered version later.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+<!-- ===========================
+     IT TROUBLESHOOTING SIMULATOR
+============================ -->
+  <div class="modal" id="troubleshootModal" aria-hidden="true">
+    <div class="modal-backdrop" id="troubleshootCloseBackdrop"></div>
+
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-label="IT Troubleshooting Simulator">
+      <div class="modal-topbar">
+        <div class="modal-title">
+          IT Troubleshooting Simulator <span class="badge">Decision-Based</span>
+        </div>
+        <button class="icon-btn" id="troubleshootCloseBtn" type="button">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <section class="troubleshoot-sim">
+          <p class="hint">
+            Select a scenario and walk through the correct troubleshooting steps.
+          </p>
+
+          <label class="label">Scenario</label>
+          <select id="scenarioSelect" class="textarea troubleshoot-select">
+            <option value="">Select a scenario…</option>
+            <option value="boot">PC Won’t Boot</option>
+            <option value="network">Network Outage</option>
+            <option value="battery">Battery Draining Fast</option>
+          </select>
+
+          <div class="glass troubleshoot-panel" id="scenarioPanel">
+            <div class="troubleshoot-question" id="scenarioQuestion"></div>
+            <div class="troubleshoot-choices" id="scenarioChoices"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
     <!-- ===========================
         PAC-MAN MODAL (replacing UI lab)
@@ -370,6 +489,8 @@ Style: concise, practical, modern.</textarea>
         </p>
     </div>
     </div> -->
+
+    
 
 
 <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
